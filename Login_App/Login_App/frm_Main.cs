@@ -18,15 +18,17 @@ namespace Login_App
         public string fName { get; set; }
         public string lName { get; set; }
         public string gender { get; set; }
-        bool directly = false;
-        public frm_Main(string fName, string lName, string email, string pass, string phone, bool directly)
+        bool isdirectly = false;
+        public frm_Main(string fName, string lName, string email, string pass, string phone, bool isdirectly)
         {
             InitializeComponent();
+            #region info that shown in main page
             txt_fullName.Text = fName + " " + lName;
             txt_email.Text = email;
             txt_pass.Text = pass;
             txt_phone.Text = phone;
-            this.directly = directly;
+            #endregion
+            this.isdirectly = isdirectly; // define if main form opened directly after runnning app or opened after login process, using when sign out from main form.
         }
         private void frm_Main_Load(object sender, EventArgs e)
         {
@@ -34,16 +36,16 @@ namespace Login_App
             {
                 File.Delete(DataFile.currecntUserDataPath);
             }
+            // record the current user to inter it directly in case of close main without sign out:
             DataFile.writeData(fName, lName, txt_email.Text, txt_pass.Text, gender, txt_phone.Text, DataFile.currecntUserDataPath);
         }
         private void btn_sign_out_Click(object sender, EventArgs e)
         {
             File.Delete(DataFile.currecntUserDataPath);
-            if (!directly)
+            if (!isdirectly)
             {
                 frm_Login loginForm = new(false);
                 loginForm.Show();
-                isClosed = false;
             }
             this.Hide();
         }

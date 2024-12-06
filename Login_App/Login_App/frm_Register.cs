@@ -48,29 +48,23 @@ namespace Login_App
         {
             if (txt_box_phone.Text == "")
             {
-                txt_box_phone.Text = "(000) 000 000";
+                txt_box_phone.Text = "00 000 000 000";
                 txt_box_phone.ForeColor = Color.Gray;
             }
         }
         private void btn_submit_Click(object sender, EventArgs e)
         {
-            #region checking intered data if empty or invalid
+            #region checking interred data if empty or invalid
             string? gender;
             if (!checkBM.Checked && !checkBF.Checked) gender = "unChecked";
             else if (checkBM.Checked && checkBF.Checked) gender = "allChecked";
             else if (checkBM.Checked) gender = "Male";
             else gender = "Female";
-            string emailPattern = @"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$";
             if (string.IsNullOrEmpty(txt_box_FN.Text) || string.IsNullOrEmpty(txt_box_LN.Text) || string.IsNullOrEmpty(txt_box_email.Text) || string.IsNullOrEmpty(txt_box_pass.Text) || string.IsNullOrEmpty(txt_box_phone.Text))
             {
                 frm_Msg msg = new("empty values not allowed!");
                 msg.ShowDialog();
             }
-            //else if (Regex.IsMatch(txt_box_email.Text, emailPattern))
-            //{
-            //    frm_lgn_msg msg = new("Invalid Email!");
-            //    msg.ShowDialog();
-            //}
             else if (txt_box_phone.Text.Length != 11 || !long.TryParse(txt_box_phone.Text, out _))
             {
                 frm_Msg msg = new("Invalid Number!");
@@ -106,7 +100,7 @@ namespace Login_App
                 {
                     DataFile.writeData(txt_box_FN.Text, txt_box_LN.Text, txt_box_email.Text, txt_box_pass.Text, gender, txt_box_phone.Text, DataFile.dataPath);
                     frm_Login loginForm = new(false);
-                    frm_Msg msg = new("Account created...");
+                    frm_Msg msg = new("Account created ...");
                     msg.ShowDialog();
                     loginForm.Show();
                     this.Close();

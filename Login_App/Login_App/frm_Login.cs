@@ -21,14 +21,15 @@ namespace Login_App
         public frm_Login(bool isBasic)
         {
             InitializeComponent();
-            this.isBasic = isBasic;
+            this.isBasic = isBasic; // is the current login form the first form or not?
         }
         private void frm_Login_Load(object sender, EventArgs e)
         {
+            // if there is a stored user, open its profile directly without login process:
             if (File.Exists(DataFile.currecntUserDataPath))
             {
-                FileInfo testEmptyIn = new(DataFile.currecntUserDataPath);
-                if (testEmptyIn.Length != 0)
+                FileInfo testIfEmpty = new(DataFile.currecntUserDataPath);
+                if (testIfEmpty.Length != 0)
                 {
                     List<Dictionary<string, string>> currentUser = DataFile.readUsersData(DataFile.currecntUserDataPath);
                     frm_Main mainForm = new(currentUser[0]["First Name"], currentUser[0]["Last Name"], currentUser[0]["Email"], currentUser[0]["Password"], currentUser[0]["Phone NO"], true);
@@ -54,14 +55,14 @@ namespace Login_App
                 foreach (var user in usersData)
                 {
                     if (user["Email"] == txt_email.Text && user["Password"] == txt_pass.Text)
-                    {
+                    {   // if interred valuse matching with a created account
                         frm_Main mainForm = new(user["First Name"], user["Last Name"], user["Email"], user["Password"], user["Phone NO"], false);
                         mainForm.fName = user["First Name"];
                         mainForm.lName = user["Last Name"];
                         mainForm.gender = user["Gender"];
                         mainForm.Show();
                         isfound = true;
-                        if (isBasic)
+                        if (isBasic) // if true so it's can't be closed
                         {
                             this.Hide();
                         }
@@ -69,7 +70,7 @@ namespace Login_App
                         break;
                     }
                 }
-                if (!isfound)
+                if (!isfound) // if interred values doesn't match with a created account
                 {
                     frm_Msg msg = new("User name or Password is not correct!");
                     msg.ShowDialog();

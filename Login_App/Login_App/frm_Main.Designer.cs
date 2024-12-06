@@ -209,6 +209,7 @@
             // 
             btn_sign_out.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             btn_sign_out.BackColor = Color.Transparent;
+            btn_sign_out.BackgroundImage = Properties.Resources.signout;
             btn_sign_out.BackgroundImageLayout = ImageLayout.Zoom;
             btn_sign_out.Cursor = Cursors.Hand;
             btn_sign_out.FlatStyle = FlatStyle.Flat;
